@@ -5,6 +5,11 @@
 header {
     background-image: linear-gradient(blue, navy);
 }
+main {
+    margin: 0px 15px;
+    display: flex;
+    justify-content: space-between;
+}
 h1 {
     color: white;
     text-align: center;
@@ -12,13 +17,17 @@ h1 {
 }
 h2 {
     margin: 0;
+    font-size: 40px;
+}
+h4 {
+    margin-top: 0;
 }
 button {
     width: 100%;
     border-radius: 5px;
     border: none;
     text-align: center;
-    padding: 10px;
+    padding: 10px 0;
     font-size: 16px;
     background-color: #c0c0c0;
     margin-bottom: 10px;
@@ -26,13 +35,13 @@ button {
 input {
     width: 100%;
     padding: 10px;
-    width: 100%;
     font-size: 16px;
     margin-top: 15px;
 }
 .city-dashboard {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     width: 25%;
 }
 #search-button {
@@ -45,4 +54,33 @@ input {
 }
 .searched-cities {
     margin-top: 15px;
+}
+.today-container-card-body {
+    padding: 15px;
+    width: 100%;
+}
+.div-day-conditions {
+    display: flex;
+    justify-content: space-between;
+}
+.day-conditions {
+    background-color: rgb(62, 62, 92);
+    color: white;
+    padding: 15px;
+}
+.today-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 70%;
+}
+.today-container-card {
+    width: 100%;
+    border: 2px solid black;
+}
+.weather-img {
+    width: 75px;
+    height: 75px;
+    border-style: none;
+    vertical-align: middle;
 }
