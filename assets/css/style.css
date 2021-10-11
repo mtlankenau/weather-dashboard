@@ -30,7 +30,10 @@ button {
     padding: 10px 0;
     font-size: 16px;
     background-color: #c0c0c0;
-    margin-bottom: 10px;
+    margin-bottom: 10px;   
+}
+button:hover {
+    background-color: #9e9e9e;
 }
 input {
     width: 100%;
@@ -49,6 +52,14 @@ input {
     background-color: cornflowerblue;
     margin: 15px 0;
 }
+#search-button:hover {
+    background-color: rgb(75, 110, 177);
+}
+.btn-sm {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 0.5rem;
+}
 .city-search {
     border-bottom: 5px solid gray;
 }
@@ -61,7 +72,8 @@ input {
 }
 .div-day-conditions {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content:space-evenly;
 }
 .day-conditions {
     background-color: rgb(62, 62, 92);
@@ -69,10 +81,7 @@ input {
     padding: 15px;
 }
 .today-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 70%;
+    width: 100%;
 }
 .today-container-card {
     width: 100%;
@@ -83,4 +92,40 @@ input {
     height: 75px;
     border-style: none;
     vertical-align: middle;
+}
+.weather-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 70%;
+}
+.weekly-forecast {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.btn.btn-success {
+    background-color: #157347;
+    color: #ffffff;
+}
+  
+.btn.btn-success:hover {
+    background-color: #12854f;
+    color: #ffffff;
+}
+.btn.btn-warning {
+    background-color: #ffca2c;
+    color: #000000;
+}
+  
+.btn.btn-warning:hover {
+    background-color: #ffca2cf5;
+    color: #000000;
+}
+.btn.btn-danger {
+    background-color: #e64c66;
+    color: #ffffff;
+}
+.btn.btn-danger:hover {
+    background-color: #ee8294;
 }

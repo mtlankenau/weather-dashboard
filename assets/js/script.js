@@ -26,7 +26,7 @@ function renderSearchHistory() {
     var btn = document.createElement("button");
     btn.setAttribute('type', 'button');
     btn.setAttribute('aria-controls', 'today forecast');
-    btn.classList.add('history-btn', 'btn-history');
+    btn.classList.add('btn-light', 'btn-history');
 
     // `data-search` allows access to city name when click handler is invoked
     btn.setAttribute('data-search', searchHistory[i]);
@@ -99,21 +99,15 @@ function renderCurrentWeather(city, weather, timezone) {
   card.setAttribute('class', 'today-container-card')
   cardBody.setAttribute('id', 'today-container-card-body');
   cardBody.setAttribute('class', 'today-container-card-body');
-  // card.appendChild(cardBody);
-
-  // heading.setAttribute('class', 'h3 card-title');
-  // tempEl.setAttribute('class', 'card-text');
-  // windEl.setAttribute('class', 'card-text');
-  // humidityEl.setAttribute('class', 'card-text');
 
   heading.textContent = city + " (" + date + ")";
   weatherIcon.setAttribute('src', iconUrl);
   weatherIcon.setAttribute('class', 'weather-img');
   weatherIconSpanEl.appendChild(weatherIcon);
   heading.appendChild(weatherIconSpanEl);
-  tempEl.textContent = "Temp: " + weather.temp + "°F";
-  windEl.textContent = "Wind: " + weather.wind_speed + " MPH";
-  humidityEl.textContent = "Humidity: " + weather.humidity + "%";
+  tempEl.textContent = "Temp: " + tempF + "°F";
+  windEl.textContent = "Wind: " + windMph + " MPH";
+  humidityEl.textContent = "Humidity: " + humidity + "%";
   uvEl.textContent = 'UV Index: ';
   uviBadge.classList.add('btn', 'btn-sm');
 
@@ -140,77 +134,76 @@ function renderCurrentWeather(city, weather, timezone) {
   todayContainer.append(card);
 };
 
-// // Function to display a forecast card given an object from open weather api
-// // daily forecast.
-// function renderForecastCard(forecast, timezone) {
-//   // variables for data from api
-//   var unixTs = forecast.dt;
-//   var iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
-//   var iconDescription = forecast.weather[0].description;
-//   var tempF = /*TRAVERSE forecast to find out*/;
-//   var { humidity } = /*TRAVERSE forecast to find out*/;
-//   var windMph = /*TRAVERSE forecast to find out*/;
+// Function to display a forecast card given an object from open weather api
+// daily forecast.
+function renderForecastCard(forecast, timezone) {
+  console.log(forecast);
+  // variables for data from api
+  var unixTs = forecast.dt;
+  var iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
+  var iconDescription = forecast.weather[0].description;
+  var tempF = forecast.temp.day;
+  var humidity = forecast.humidity;
+  var windMph = forecast.wind_speed;
 
-//   // Create elements for a card
-//   var col = /*SOMETHING*/;
-//   var card = /*SOMETHING*/;
-//   var cardBody = /*SOMETHING*/;
-//   var cardTitle = /*SOMETHING*/;
-//   var weatherIcon = /*SOMETHING*/;
-//   var tempEl = /*SOMETHING*/;
-//   var windEl = /*SOMETHING*/;
-//   var humidityEl = /*SOMETHING*/;
+  // Create elements for a card
+  var col = document.createElement("div");
+  var card = document.createElement("div");
+  var cardBody = document.createElement("div");
+  var cardTitle = document.createElement("h4");
+  var weatherIcon = document.createElement("img");
+  var tempEl = document.createElement("p");
+  var windEl = document.createElement("p");
+  var humidityEl = document.createElement("p");
 
-//   col./*APPEND CARD*/;
-//   card./*APPEND CARDBODY*/
-//   cardBody./*APPEND cardTitle, weatherIcon, tempEl, windEl, humidityEl*/;
+  col.appendChild(card);
+  card.appendChild(cardBody);
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(weatherIcon);
+  cardBody.appendChild(tempEl);
+  cardBody.appendChild(windEl);
+  cardBody.appendChild(humidityEl);
+  
+  card.setAttribute('class', 'div-day-conditions');
+  cardBody.setAttribute('class', 'day-conditions');
 
-//   col.setAttribute('class', 'col-md');
-//   col.classList.add('five-day-card');
-//   card.setAttribute('class', 'card bg-primary h-100 text-white');
-//   cardBody.setAttribute('class', 'card-body p-2');
-//   cardTitle.setAttribute('class', 'card-title');
-//   tempEl.setAttribute('class', 'card-text');
-//   windEl.setAttribute('class', 'card-text');
-//   humidityEl.setAttribute('class', 'card-text');
+  // Add content to elements
+  cardTitle.textContent = dayjs.unix(unixTs).tz(timezone).format('M/D/YYYY');
+  weatherIcon.setAttribute('src', iconUrl);
+  weatherIcon.setAttribute('alt', iconDescription);
+  tempEl.textContent = "Temp: " + tempF + "°F";
+  windEl.textContent = "Wind: " + windMph + " MPH";
+  humidityEl.textContent = "Humidity: " + humidity + "%";
 
-//   // Add content to elements
-//   cardTitle.textContent = dayjs.unix(unixTs).tz(timezone).format('M/D/YYYY');
-//   weatherIcon.setAttribute('src', iconUrl);
-//   weatherIcon.setAttribute('alt', iconDescription);
-//   tempEl.textContent = /*set text = tempF*/;
-//   windEl.textContent = /*set text = windMph*/;
-//   humidityEl.textContent = /*set text = humidity*/;
+  forecastContainer.appendChild(col);
+}
 
-//   forecastContainer./*APPEND col*/;
-// }
+// Function to display 5 day forecast.
+function renderForecast(dailyForecast, timezone) {
+  // Create unix timestamps for start and end of 5 day forecast
+  var startDt = dayjs().tz(timezone).add(1, 'day').startOf('day').unix();
+  var endDt = dayjs().tz(timezone).add(6, 'day').startOf('day').unix();
 
-// // Function to display 5 day forecast.
-// function renderForecast(dailyForecast, timezone) {
-//   // Create unix timestamps for start and end of 5 day forecast
-//   var startDt = dayjs().tz(timezone).add(1, 'day').startOf('day').unix();
-//   var endDt = dayjs().tz(timezone).add(6, 'day').startOf('day').unix();
+  // Create elements
+  var headingCol = document.createElement("div");
+  var heading = document.createElement("h3");
 
-//   // Create elements
-//   var headingCol = /*SOMETHING*/;
-//   var heading = /*SOMETHING*/;
+  heading.textContent = '5-Day Forecast:';
+  headingCol.appendChild(heading);
 
-//   headingCol.setAttribute('class', 'col-12');
-//   heading.textContent = '5-Day Forecast:';
-//   headingCol./*APPEND heading*/;
-
-//   forecastContainer.innerHTML = '';
-//   forecastContainer./*APPEND headingCol*/;
-//   for (var i = 0; i < dailyForecast.length; i++) {
-//     // The api returns forecast data which may include 12pm on the same day and
-//     // always includes the next 7 days. The api documentation does not provide
-//     // information on the behavior for including the same day. Results may have
-//     // 7 or 8 items.
-//     if (dailyForecast[i].dt >= startDt && dailyForecast[i].dt < endDt) {
-//       renderForecastCard(dailyForecast[i], timezone);
-//     }
-//   }
-// }
+  forecastContainer.innerHTML = '';
+  forecastContainer.appendChild(headingCol);
+  for (var i = 0; i < dailyForecast.length; i++) {
+    // The api returns forecast data which may include 12pm on the same day and
+    // always includes the next 7 days. The api documentation does not provide
+    // information on the behavior for including the same day. Results may have
+    // 7 or 8 items.
+    if (dailyForecast[i].dt >= startDt && dailyForecast[i].dt < endDt) {
+      console.log(dailyForecast[i]);
+      renderForecastCard(dailyForecast[i], timezone);
+    }
+  }
+}
 
 function renderItems(city, data) {
   renderCurrentWeather(city, data.current, data.timezone);
@@ -280,7 +273,8 @@ function handleSearchHistoryClick(e) {
   }
 
   var btn = e.target;
-  var search = JSON.parse(btn.getAttribute('data-search'));
+  var search = btn.getAttribute('data-search');
+  console.log(search);
 
   fetchCoords(search);
 };
